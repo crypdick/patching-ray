@@ -1,5 +1,7 @@
 from unittest.mock import MagicMock
+
 import numpy as np
+
 
 def mock_load_model_and_preprocessor():
     mock_preprocessor = MagicMock()
