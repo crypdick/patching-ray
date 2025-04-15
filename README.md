@@ -5,7 +5,6 @@ How to patch Ray Data actors for CI testing.
 ## Usage
 
 ```bash
-uv sync
-source activate .venv/bin/activate
+pip install -r requirements.txt
 pytest
 ```
