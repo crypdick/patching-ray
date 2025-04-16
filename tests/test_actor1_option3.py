@@ -2,9 +2,10 @@ from unittest.mock import MagicMock, patch
 
 import numpy as np
 import pandas as pd
+import ray
 
 from patching_ray.repro_infer import main
-from tests.common import mock_load_model_and_preprocessor
+from tests.common import mock_load_model_and_preprocessor, mock_mock_me
 
 
 class MockValidator:
@@ -25,4 +26,16 @@ def test_option_3():
     # pickle cannot find the `test_3` module:
     # ModuleNotFoundError: No module named 'test_3'
     print("Running test_option_3")
+    main()
+
+
+@ray.remote
+class MockActor1:
+    def __init__(self):
+        self.attribute = mock_mock_me()
+
+
+@patch("patching_ray.actor1.mock_me", mock_mock_me)
+@patch("patching_ray.actor1.Actor1", MockActor1)
+def test_actor1_option_3():
     main()

@@ -9,3 +9,7 @@ def mock_load_model_and_preprocessor():
     mock_model = MagicMock()
     mock_model.predict.side_effect = lambda x: np.random.random(size=(len(x),))
     return mock_preprocessor, mock_model
+
+
+def mock_mock_me():
+    print("mock_me successfully patched in common.py")
