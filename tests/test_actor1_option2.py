@@ -5,9 +5,7 @@ from tests.test_util import mock_mock_me
 
 
 def mock_actor1_init(self, *args, **kwargs):
-    print("#" * 50)
-    print("Using mock_actor1_init")
-    print("#" * 50)
+    print("mock_me successfully patched CallableClass.__init__")
     self.attribute = mock_mock_me()
 
 
