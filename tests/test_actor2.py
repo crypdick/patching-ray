@@ -3,7 +3,7 @@
 from unittest.mock import patch
 
 from patching_ray.actor2 import main
-from tests.common import mock_mock_me
+from tests.test_util import mock_mock_me
 
 
 @patch("patching_ray.actor2.mock_me", mock_mock_me)

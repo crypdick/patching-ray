@@ -2,21 +2,30 @@ import ray
 
 from patching_ray.common import mock_me
 
+# make ray.data less verbose
+ray.data.DataContext.get_current().enable_progress_bars = False
+ray.data.DataContext.get_current().print_on_execution_start = False
 
-@ray.remote
-class Actor1:
+
+class CallableClass:
     def __init__(self):
         self.attribute = mock_me()
 
+    def __call__(self, batch):
+        return batch
+
 
 def main():
-    ray.init()
-
     mock_me()
-    print("mock_me successfully patched in main()")
+    print("#" * 50)
+    print(f"Successfully mocked mock_me in main(): {type(mock_me)}")
+    print("#" * 50)
 
-    actor = Actor1.remote()
-    ray.get(actor.attribute)
+    ds = ray.data.range(1000)
+    ds = ds.map_batches(CallableClass, concurrency=1)
+
+    df = ds.to_pandas()
+    print(df)
 
 
 if __name__ == "__main__":
